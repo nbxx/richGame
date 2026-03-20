@@ -251,7 +251,15 @@ html, body {
   .nav-container-left { gap: 0.5rem !important; }
   .nav-container-right { gap: 0.25rem !important; }
   .nav-brand-text { display: none; }
-  .nav-email { display: none; }
+  
+  .nav-email { 
+    display: inline-block;
+    font-size: 0.65rem !important;
+    max-width: 65px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   
   .nav-links { gap: 0; }
   .nav-link { padding: 0.5rem 0.375rem; font-size: 0.75rem; white-space: nowrap; }
