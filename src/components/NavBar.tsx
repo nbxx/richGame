@@ -33,9 +33,10 @@ export function NavBar() {
 
   return (
     <nav className="nav-bar">
-      <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-        <Link href="/dashboard" style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--gold)', textDecoration: 'none' }}>
-          💰 RichGame
+      <div className="nav-container-left" style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+        <Link href="/dashboard" className="nav-brand" style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--gold)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+          <span>💰</span>
+          <span className="nav-brand-text">RichGame</span>
         </Link>
         <div className="nav-links">
           {links.map((link) => (
@@ -50,9 +51,9 @@ export function NavBar() {
         </div>
       </div>
       {user && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <span className="text-muted" style={{ fontSize: '0.8125rem' }}>{user.email}</span>
-          <button onClick={handleLogout} className="btn btn-outline" style={{ padding: '0.375rem 0.75rem', fontSize: '0.8125rem' }}>
+        <div className="nav-container-right" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <span className="text-muted nav-email" style={{ fontSize: '0.8125rem' }}>{user.email}</span>
+          <button onClick={handleLogout} className="btn btn-outline" style={{ padding: '0.375rem 0.75rem', fontSize: '0.8125rem', whiteSpace: 'nowrap' }}>
             登出
           </button>
         </div>

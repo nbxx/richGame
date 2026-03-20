@@ -102,14 +102,15 @@ export default function StocksPage() {
 
       {/* Stock Table */}
       <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
-        <table className="data-table">
+        <div className="table-responsive">
+          <table className="data-table">
           <thead>
             <tr>
               <th>代码</th>
-              <th>公司</th>
-              <th>行业</th>
+              <th className="hide-on-mobile">公司</th>
+              <th className="hide-on-mobile">行业</th>
               <th style={{ textAlign: 'right' }}>现价</th>
-              <th style={{ textAlign: 'right' }}>涨跌</th>
+              <th className="hide-on-mobile" style={{ textAlign: 'right' }}>涨跌</th>
               <th style={{ textAlign: 'right' }}>涨跌幅</th>
               <th></th>
             </tr>
@@ -118,14 +119,14 @@ export default function StocksPage() {
             {filtered.map((stock) => (
               <tr key={stock.symbol}>
                 <td style={{ fontWeight: 700 }}>{stock.symbol}</td>
-                <td className="text-secondary" style={{ fontSize: '0.8125rem' }}>{stock.companyName}</td>
-                <td>
+                <td className="text-secondary hide-on-mobile" style={{ fontSize: '0.8125rem' }}>{stock.companyName}</td>
+                <td className="hide-on-mobile">
                   <span className="badge badge-blue">{stock.sector}</span>
                 </td>
                 <td style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)', fontWeight: 600 }}>
                   {fmt(stock.price)}
                 </td>
-                <td style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }}>
+                <td className="hide-on-mobile" style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }}>
                   <span className={stock.change >= 0 ? 'text-green' : 'text-red'}>
                     {stock.change >= 0 ? '+' : ''}{stock.change?.toFixed(2) ?? '—'}
                   </span>
@@ -147,7 +148,8 @@ export default function StocksPage() {
               </tr>
             ))}
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
 
       {tradeSymbol && (

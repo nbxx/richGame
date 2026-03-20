@@ -111,45 +111,52 @@ export default function LeaderboardPage() {
             </p>
           </div>
         ) : (
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th style={{ width: '80px' }}>排名</th>
-                <th>玩家</th>
-                <th style={{ textAlign: 'right' }}>总资产</th>
-                <th style={{ textAlign: 'right' }}>现金</th>
-                <th style={{ textAlign: 'right' }}>持仓</th>
-              </tr>
-            </thead>
-            <tbody>
-              {entries.map((entry) => (
-                <tr key={entry.userId} className={entry.userId === currentUserId ? 'highlight' : ''}>
-                  <td>
-                    <span style={{ fontWeight: 700, ...getRankStyle(entry.rank) }}>
-                      {getRankEmoji(entry.rank)}
-                    </span>
-                  </td>
-                  <td>
-                    <span style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '0.875rem' }}>
-                      {entry.displayName}
-                    </span>
-                    {entry.userId === currentUserId && (
-                      <span className="badge badge-blue" style={{ marginLeft: '0.5rem' }}>你</span>
-                    )}
-                  </td>
-                  <td style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)', fontWeight: 700, color: 'var(--gold)' }}>
-                    {fmt(entry.totalAssets)}
-                  </td>
-                  <td style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }} className="text-secondary">
-                    {fmt(entry.cashBalance)}
-                  </td>
-                  <td style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }} className="text-secondary">
-                    {fmt(entry.portfolioValue)}
-                  </td>
+          <div className="table-responsive">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th style={{ width: '80px' }}>排名</th>
+                  <th>玩家</th>
+                  <th style={{ textAlign: 'right' }}>总资产</th>
+                  <th className="hide-on-mobile" style={{ textAlign: 'right' }}>现金</th>
+                  <th className="hide-on-mobile" style={{ textAlign: 'right' }}>持仓</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {entries.map((entry) => (
+                  <tr key={entry.userId} className={entry.userId === currentUserId ? 'highlight' : ''}>
+                    <td>
+                      <span style={{ fontWeight: 700, ...getRankStyle(entry.rank) }}>
+                        {getRankEmoji(entry.rank)}
+                      </span>
+                    </td>
+                    <td>
+                      <span style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '0.875rem' }}>
+                        {entry.displayName}
+                      </span>
+                      {entry.userId === currentUserId && (
+                        <span className="badge badge-blue" style={{ marginLeft: '0.5rem' }}>你</span>
+                      )}
+                    </td>
+                    <td style={{ textAlign: 'right' }}>
+                      <div style={{ fontFamily: 'var(--font-geist-mono)', fontWeight: 700, color: 'var(--gold)' }}>
+                        {fmt(entry.totalAssets)}
+                      </div>
+                      <div className="show-on-mobile text-muted" style={{ fontSize: '0.625rem', fontFamily: 'var(--font-geist-mono)', marginTop: '0.25rem' }}>
+                        现金: {fmt(entry.cashBalance)}<br />持仓: {fmt(entry.portfolioValue)}
+                      </div>
+                    </td>
+                    <td className="hide-on-mobile text-secondary" style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }}>
+                      {fmt(entry.cashBalance)}
+                    </td>
+                    <td className="hide-on-mobile text-secondary" style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }}>
+                      {fmt(entry.portfolioValue)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>

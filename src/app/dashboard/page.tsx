@@ -142,14 +142,15 @@ export default function DashboardPage() {
             </p>
           </div>
         ) : (
-          <table className="data-table">
+          <div className="table-responsive">
+            <table className="data-table">
             <thead>
               <tr>
                 <th>股票</th>
                 <th style={{ textAlign: 'right' }}>持仓量</th>
-                <th style={{ textAlign: 'right' }}>均价</th>
+                <th className="hide-on-mobile" style={{ textAlign: 'right' }}>均价</th>
                 <th style={{ textAlign: 'right' }}>现价</th>
-                <th style={{ textAlign: 'right' }}>市值</th>
+                <th className="hide-on-mobile" style={{ textAlign: 'right' }}>市值</th>
                 <th style={{ textAlign: 'right' }}>盈亏</th>
                 <th></th>
               </tr>
@@ -159,12 +160,13 @@ export default function DashboardPage() {
                 <tr key={h.symbol}>
                   <td style={{ fontWeight: 600 }}>{h.symbol}</td>
                   <td style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }}>{h.quantity.toFixed(4)}</td>
-                  <td style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }}>{fmt(h.avgCost)}</td>
+                  <td className="hide-on-mobile" style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }}>{fmt(h.avgCost)}</td>
                   <td style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }}>{fmt(h.currentPrice)}</td>
-                  <td style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }}>{fmt(h.marketValue)}</td>
+                  <td className="hide-on-mobile" style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }}>{fmt(h.marketValue)}</td>
                   <td style={{ textAlign: 'right' }}>
-                    <span className={h.gainLoss >= 0 ? 'text-green' : 'text-red'} style={{ fontFamily: 'var(--font-geist-mono)' }}>
-                      {fmt(h.gainLoss)} ({fmtPct(h.gainLossPercent)})
+                    <span className={h.gainLoss >= 0 ? 'text-green' : 'text-red'} style={{ fontFamily: 'var(--font-geist-mono)', display: 'inline-block' }}>
+                      <span className="hide-on-mobile">{fmt(h.gainLoss)} </span>
+                      ({fmtPct(h.gainLossPercent)})
                     </span>
                   </td>
                   <td>
@@ -176,7 +178,8 @@ export default function DashboardPage() {
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
+          </div>
         )}
       </div>
 
