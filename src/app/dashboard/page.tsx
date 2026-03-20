@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { TradeModal } from '@/components/TradeModal'
 
@@ -17,6 +18,7 @@ interface Holding {
 const supabase = createClient()
 
 export default function DashboardPage() {
+  const router = useRouter()
   const [cashBalance, setCashBalance] = useState(0)
   const [holdings, setHoldings] = useState<Holding[]>([])
   const [loading, setLoading] = useState(true)
@@ -24,7 +26,10 @@ export default function DashboardPage() {
 
   const fetchData = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    if (!user) {
+      router.push('/login')
+      return
+    }
 
     // Get user cash balance
     const { data: userData } = await supabase
@@ -76,7 +81,7 @@ export default function DashboardPage() {
     }
 
     setLoading(false)
-  }, [supabase])
+  }, [supabase, router])
 
   useEffect(() => {
     fetchData()
