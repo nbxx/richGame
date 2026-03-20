@@ -97,7 +97,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content fade-in" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
           <div>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>{symbol}</h3>
             {stockData && (
@@ -109,7 +109,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
 
         {/* Price */}
         {stockData && (
-          <div style={{ marginBottom: '1.5rem', padding: '1rem', background: 'var(--bg-input)', borderRadius: 'var(--radius-sm)' }}>
+          <div style={{ marginBottom: '0.75rem', padding: '0.625rem 1rem', background: 'var(--bg-input)', borderRadius: 'var(--radius-sm)' }}>
             <span style={{ fontSize: '1.5rem', fontWeight: 700, fontFamily: 'var(--font-geist-mono)' }}>{fmt(price)}</span>
             <span className={stockData.change >= 0 ? 'text-green' : 'text-red'} style={{ marginLeft: '0.75rem', fontSize: '0.875rem', fontFamily: 'var(--font-geist-mono)' }}>
               {stockData.change >= 0 ? '+' : ''}{stockData.change?.toFixed(2)} ({stockData.changePercent?.toFixed(2)}%)
@@ -118,7 +118,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
         )}
 
         {/* Buy/Sell Toggle */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '1.25rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.75rem' }}>
           <button
             className={`btn ${action === 'BUY' ? 'btn-green' : 'btn-outline'}`}
             onClick={() => { setAction('BUY'); setInputValue(''); }}
@@ -134,7 +134,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
         </div>
 
         {/* User Status Info */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', padding: '0.75rem', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', fontSize: '0.75rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', padding: '0.5rem 0.75rem', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', fontSize: '0.75rem' }}>
           <div className="text-secondary">
             可用金额: <span style={{ color: 'var(--text)', fontWeight: 600 }}>{userCash !== null ? fmt(userCash) : '...'}</span>
           </div>
@@ -144,7 +144,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
         </div>
 
         {/* Mode Toggle */}
-        <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
+        <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem' }}>
           <button
             className={`btn ${mode === 'quantity' ? 'btn-primary' : 'btn-outline'}`}
             style={{ flex: 1, padding: '0.375rem' }}
@@ -162,8 +162,8 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
         </div>
 
         {/* Input */}
-        <div style={{ marginBottom: '1rem' }}>
-          <label className="text-secondary" style={{ display: 'block', fontSize: '0.8125rem', marginBottom: '0.375rem' }}>
+        <div style={{ marginBottom: '0.75rem' }}>
+          <label className="text-secondary" style={{ display: 'block', fontSize: '0.8125rem', marginBottom: '0.25rem' }}>
             {mode === 'amount' ? '金额 (USD)' : '股数'}
           </label>
           <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
@@ -205,7 +205,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
 
         {/* Estimate */}
         {numValue > 0 && price > 0 && (
-          <div style={{ padding: '0.75rem 1rem', background: 'var(--bg-input)', borderRadius: 'var(--radius-sm)', marginBottom: '1.25rem', fontSize: '0.8125rem' }}>
+          <div style={{ padding: '0.5rem 1rem', background: 'var(--bg-input)', borderRadius: 'var(--radius-sm)', marginBottom: '0.75rem', fontSize: '0.8125rem' }}>
             {mode === 'amount' ? (
               <p>预计 {action === 'BUY' ? '买入' : '卖出'} <strong>{estimatedQty.toFixed(4)}</strong> 股</p>
             ) : (
@@ -218,7 +218,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
         <button
           id="confirm-trade-btn"
           className={`btn ${action === 'BUY' ? 'btn-green' : 'btn-red'}`}
-          style={{ width: '100%', padding: '0.75rem' }}
+          style={{ width: '100%', padding: '0.625rem' }}
           onClick={handleTrade}
           disabled={loading || numValue <= 0}
         >

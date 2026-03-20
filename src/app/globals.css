@@ -278,11 +278,11 @@ html, body {
   
   .modal-overlay {
     align-items: flex-start;
-    padding-top: 8vh;
+    padding-top: 2vh;
   }
   
   .modal-content {
-    padding: 1.25rem;
-    max-height: 80vh;
+    padding: 1rem;
+    max-height: 85vh;
   }
 }
