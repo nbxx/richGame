@@ -276,8 +276,13 @@ html, body {
     display: block !important;
   }
   
+  .modal-overlay {
+    align-items: flex-start;
+    padding-top: 8vh;
+  }
+  
   .modal-content {
     padding: 1.25rem;
-    max-height: 85vh;
+    max-height: 80vh;
   }
 }
