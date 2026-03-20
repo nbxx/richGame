@@ -5,14 +5,20 @@ import { getQuote, type FinnhubQuote } from '@/lib/finnhub'
 const CACHE_TTL_MS = 15_000 // 15 seconds
 
 /**
- * GET /api/stocks — Return all tradable stocks with cached prices
+ * GET /api/stocks — Return stocks with cached prices (all active or filtered by symbols)
  */
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url)
+    const symbolsParam = searchParams.get('symbols')
+    const symbols = symbolsParam 
+      ? symbolsParam.split(',').map(s => s.trim().toUpperCase()) 
+      : null
+
     const supabase = createAdminClient()
 
-    // Fetch all active stocks with their cached prices
-    const { data: stocks, error } = await supabase
+    // Query active stocks or filter by symbols
+    let query = supabase
       .from('stocks')
       .select(`
         symbol,
@@ -29,8 +35,14 @@ export async function GET() {
           cached_at
         )
       `)
-      .eq('is_active', true)
-      .order('symbol')
+
+    if (symbols && symbols.length > 0) {
+      query = query.in('symbol', symbols)
+    } else {
+      query = query.eq('is_active', true)
+    }
+
+    const { data: stocks, error } = await query.order('symbol')
 
     if (error) {
       console.error('Error fetching stocks:', error)
@@ -82,7 +94,7 @@ export async function GET() {
       await Promise.all(refreshPromises)
 
       // Re-fetch with updated prices
-      const { data: updatedStocks, error: refetchError } = await supabase
+      let refetchQuery = supabase
         .from('stocks')
         .select(`
           symbol,
@@ -99,8 +111,14 @@ export async function GET() {
             cached_at
           )
         `)
-        .eq('is_active', true)
-        .order('symbol')
+
+      if (symbols && symbols.length > 0) {
+        refetchQuery = refetchQuery.in('symbol', symbols)
+      } else {
+        refetchQuery = refetchQuery.eq('is_active', true)
+      }
+
+      const { data: updatedStocks, error: refetchError } = await refetchQuery.order('symbol')
 
       if (!refetchError && updatedStocks) {
         const formatted = updatedStocks.map(formatStock)

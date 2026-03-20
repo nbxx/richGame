@@ -14,12 +14,13 @@ interface Holding {
   gainLossPercent: number
 }
 
+const supabase = createClient()
+
 export default function DashboardPage() {
   const [cashBalance, setCashBalance] = useState(0)
   const [holdings, setHoldings] = useState<Holding[]>([])
   const [loading, setLoading] = useState(true)
   const [tradeSymbol, setTradeSymbol] = useState<string | null>(null)
-  const supabase = createClient()
 
   const fetchData = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
@@ -42,8 +43,9 @@ export default function DashboardPage() {
       .gt('quantity', 0)
 
     if (portfolios && portfolios.length > 0) {
-      // Fetch current prices
-      const res = await fetch('/api/stocks')
+      // Fetch only the prices we need for current holdings
+      const symbols = portfolios.map(p => p.symbol).join(',')
+      const res = await fetch(`/api/stocks?symbols=${symbols}`)
       const { stocks } = await res.json()
       const priceMap: Record<string, number> = {}
       for (const s of stocks || []) {
