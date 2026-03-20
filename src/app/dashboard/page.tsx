@@ -80,7 +80,11 @@ export default function DashboardPage() {
 
   useEffect(() => {
     fetchData()
-    const interval = setInterval(fetchData, 30000) // Refresh every 30s
+    const interval = setInterval(() => {
+      if (!document.hidden) {
+        fetchData()
+      }
+    }, 60000) // Refresh every 60s and only if tab is visible
     return () => clearInterval(interval)
   }, [fetchData])
 

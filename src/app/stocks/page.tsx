@@ -35,7 +35,11 @@ export default function StocksPage() {
 
   useEffect(() => {
     fetchStocks()
-    const interval = setInterval(fetchStocks, 30000)
+    const interval = setInterval(() => {
+      if (!document.hidden) {
+        fetchStocks()
+      }
+    }, 60000) // Refresh every 60s and only if tab is visible
     return () => clearInterval(interval)
   }, [fetchStocks])
 
