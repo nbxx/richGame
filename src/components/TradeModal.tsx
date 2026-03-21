@@ -233,7 +233,6 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
               onChange={(e) => setInputValue(e.target.value)}
               min="0"
               step={mode === 'amount' ? '0.01' : '0.000001'}
-              autoFocus
               style={{ width: '100%' }}
             />
             {action === 'SELL' && mode === 'quantity' && userHoldings > 0 && (
