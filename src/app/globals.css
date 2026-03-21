@@ -416,7 +416,7 @@ body {
 
   .modal-overlay {
     align-items: flex-end;
-    padding-bottom: 30em;
+    padding-bottom: 50em;
     padding-top: 35em;
     height: 100dvh;
   }
