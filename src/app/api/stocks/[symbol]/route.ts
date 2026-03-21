@@ -39,8 +39,11 @@ export async function GET(
       .eq('symbol', upperSymbol)
       .single()
 
+    const force = request.nextUrl.searchParams.get('force') === 'true'
+
     const now = Date.now()
     const isStale =
+      force ||
       !cached ||
       !cached.cached_at ||
       now - new Date(cached.cached_at).getTime() > CACHE_TTL_MS

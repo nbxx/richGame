@@ -238,6 +238,13 @@ html, body {
   50% { color: var(--text-primary); }
 }
 .pulse-green { animation: pulse-green 1s ease-in-out; }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.spin { animation: spin 1s linear infinite; }
+
 .show-on-mobile {
   display: none;
 }

@@ -15,6 +15,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
   const [inputValue, setInputValue] = useState('')
   const [stockData, setStockData] = useState<{ price: number; companyName: string; change: number; changePercent: number } | null>(null)
   const [loading, setLoading] = useState(false)
+  const [refreshingPrice, setRefreshingPrice] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
 
@@ -91,31 +92,70 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
     setLoading(false)
   }
 
+  const handleRefreshPrice = async () => {
+    setRefreshingPrice(true)
+    setError('')
+    try {
+      const res = await fetch(`/api/stocks/${symbol}?force=true`)
+      if (res.ok) {
+        const data = await res.json()
+        setStockData(data)
+      }
+    } catch {
+      // ignore
+    }
+    setRefreshingPrice(false)
+  }
+
   const fmt = (n: number) => n.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
 
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content fade-in" onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-          <div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>{symbol}</h3>
+        {/* Header & Price Combined */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', gap: '0.5rem' }}>
+          
+          {/* Symbol & Company */}
+          <div style={{ flex: '1 1 auto', minWidth: 0 }}>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: 0, lineHeight: 1.1 }}>{symbol}</h3>
             {stockData && (
-              <p className="text-secondary" style={{ fontSize: '0.8125rem' }}>{stockData.companyName}</p>
+              <p className="text-secondary" style={{ fontSize: '0.75rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', margin: '0.125rem 0 0 0' }}>{stockData.companyName}</p>
             )}
           </div>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '1.5rem', cursor: 'pointer' }}>✕</button>
-        </div>
 
-        {/* Price */}
-        {stockData && (
-          <div style={{ marginBottom: '0.75rem', padding: '0.625rem 1rem', background: 'var(--bg-input)', borderRadius: 'var(--radius-sm)' }}>
-            <span style={{ fontSize: '1.5rem', fontWeight: 700, fontFamily: 'var(--font-geist-mono)' }}>{fmt(price)}</span>
-            <span className={stockData.change >= 0 ? 'text-green' : 'text-red'} style={{ marginLeft: '0.75rem', fontSize: '0.875rem', fontFamily: 'var(--font-geist-mono)' }}>
-              {stockData.change >= 0 ? '+' : ''}{stockData.change?.toFixed(2)} ({stockData.changePercent?.toFixed(2)}%)
-            </span>
+          {/* Price Block */}
+          {stockData && (
+            <div style={{ display: 'flex', alignItems: 'center', justifyItems: 'center', gap: '0.5rem', flexShrink: 0, background: 'var(--bg-input)', padding: '0.375rem 0.5rem', borderRadius: 'var(--radius-sm)' }}>
+              <div style={{ fontSize: '1.25rem', fontWeight: 700, fontFamily: 'var(--font-geist-mono)' }}>
+                {fmt(price)}
+              </div>
+              <div className={stockData.change >= 0 ? 'text-green' : 'text-red'} style={{ display: 'flex', flexDirection: 'column', fontSize: '0.6875rem', fontFamily: 'var(--font-geist-mono)', lineHeight: 1.2, textAlign: 'right' }}>
+                <span>{stockData.change >= 0 ? '+' : ''}{stockData.change?.toFixed(2)}</span>
+                <span>({stockData.changePercent >= 0 ? '+' : ''}{stockData.changePercent?.toFixed(2)}%)</span>
+              </div>
+            </div>
+          )}
+
+          {/* Actions: Refresh & Close */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', flexShrink: 0 }}>
+            <button 
+              onClick={handleRefreshPrice} 
+              disabled={refreshingPrice}
+              className="btn-outline"
+              style={{ borderRadius: '0.25rem', padding: '0.375rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              title="获取最新股价"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={refreshingPrice ? 'spin' : ''}>
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+              </svg>
+            </button>
+            <button onClick={onClose} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '0.25rem', display: 'flex' }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
           </div>
-        )}
+        </div>
 
         {/* Buy/Sell Toggle */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.75rem' }}>
