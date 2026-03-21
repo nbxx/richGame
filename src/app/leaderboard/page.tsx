@@ -97,7 +97,7 @@ export default function LeaderboardPage() {
             disabled={refreshing}
             style={{ padding: '0.375rem 0.875rem', fontSize: '0.8125rem' }}
           >
-            {refreshing ? '计算中...' : '🔄 刷新排名'}
+            {refreshing ? '思考中...' : '🔄 刷新排名'}
           </button>
         </div>
       </div>
