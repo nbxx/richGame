@@ -21,6 +21,22 @@ export default function StocksPage() {
   const [sectorFilter, setSectorFilter] = useState('All')
   const [loading, setLoading] = useState(true)
   const [tradeSymbol, setTradeSymbol] = useState<string | null>(null)
+  
+  const [sortConfig, setSortConfig] = useState<{ key: keyof Stock; dir: 'asc' | 'desc' } | null>(null)
+
+  const handleSort = (key: keyof Stock) => {
+    let dir: 'asc' | 'desc' = 'asc'
+    if (sortConfig?.key === key && sortConfig.dir === 'asc') dir = 'desc'
+    setSortConfig({ key, dir })
+  }
+
+  const sortedFiltered = [...filtered].sort((a, b) => {
+    if (!sortConfig) return 0
+    const { key, dir } = sortConfig
+    if (a[key] < b[key]) return dir === 'asc' ? -1 : 1
+    if (a[key] > b[key]) return dir === 'asc' ? 1 : -1
+    return 0
+  })
 
   const fetchStocks = useCallback(async () => {
     try {
@@ -106,17 +122,29 @@ export default function StocksPage() {
           <table className="data-table">
           <thead>
             <tr>
-              <th>代码</th>
-              <th className="hide-on-mobile">公司</th>
-              <th className="hide-on-mobile">行业</th>
-              <th style={{ textAlign: 'right' }}>现价</th>
-              <th className="hide-on-mobile" style={{ textAlign: 'right' }}>涨跌</th>
-              <th style={{ textAlign: 'right' }}>涨跌幅</th>
+              <th onClick={() => handleSort('symbol')} style={{ cursor: 'pointer', userSelect: 'none' }}>
+                代码 {sortConfig?.key === 'symbol' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+              </th>
+              <th onClick={() => handleSort('companyName')} className="hide-on-mobile" style={{ cursor: 'pointer', userSelect: 'none' }}>
+                公司 {sortConfig?.key === 'companyName' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+              </th>
+              <th onClick={() => handleSort('sector')} className="hide-on-mobile" style={{ cursor: 'pointer', userSelect: 'none' }}>
+                行业 {sortConfig?.key === 'sector' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+              </th>
+              <th onClick={() => handleSort('price')} style={{ cursor: 'pointer', userSelect: 'none', textAlign: 'right' }}>
+                现价 {sortConfig?.key === 'price' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+              </th>
+              <th onClick={() => handleSort('change')} className="hide-on-mobile" style={{ cursor: 'pointer', userSelect: 'none', textAlign: 'right' }}>
+                涨跌 {sortConfig?.key === 'change' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+              </th>
+              <th onClick={() => handleSort('changePercent')} style={{ cursor: 'pointer', userSelect: 'none', textAlign: 'right' }}>
+                涨跌幅 {sortConfig?.key === 'changePercent' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+              </th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {filtered.map((stock) => (
+            {sortedFiltered.map((stock) => (
               <tr key={stock.symbol}>
                 <td style={{ fontWeight: 700 }}>{stock.symbol}</td>
                 <td className="text-secondary hide-on-mobile" style={{ fontSize: '0.8125rem' }}>{stock.companyName}</td>

@@ -23,6 +23,21 @@ export default function DashboardPage() {
   const [holdings, setHoldings] = useState<Holding[]>([])
   const [loading, setLoading] = useState(true)
   const [tradeSymbol, setTradeSymbol] = useState<string | null>(null)
+  const [sortConfig, setSortConfig] = useState<{ key: keyof Holding; dir: 'asc' | 'desc' } | null>(null)
+
+  const handleSort = (key: keyof Holding) => {
+    let dir: 'asc' | 'desc' = 'asc'
+    if (sortConfig?.key === key && sortConfig.dir === 'asc') dir = 'desc'
+    setSortConfig({ key, dir })
+  }
+
+  const sortedHoldings = [...holdings].sort((a, b) => {
+    if (!sortConfig) return 0
+    const { key, dir } = sortConfig
+    if (a[key] < b[key]) return dir === 'asc' ? -1 : 1
+    if (a[key] > b[key]) return dir === 'asc' ? 1 : -1
+    return 0
+  })
 
   const fetchData = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
@@ -146,17 +161,29 @@ export default function DashboardPage() {
             <table className="data-table">
             <thead>
               <tr>
-                <th>股票</th>
-                <th style={{ textAlign: 'right' }}>持仓量</th>
-                <th className="hide-on-mobile" style={{ textAlign: 'right' }}>均价</th>
-                <th style={{ textAlign: 'right' }}>现价</th>
-                <th className="hide-on-mobile" style={{ textAlign: 'right' }}>市值</th>
-                <th style={{ textAlign: 'right' }}>盈亏</th>
+                <th onClick={() => handleSort('symbol')} style={{ cursor: 'pointer', userSelect: 'none' }}>
+                  股票 {sortConfig?.key === 'symbol' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                </th>
+                <th onClick={() => handleSort('quantity')} style={{ cursor: 'pointer', userSelect: 'none', textAlign: 'right' }}>
+                  持仓量 {sortConfig?.key === 'quantity' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                </th>
+                <th onClick={() => handleSort('avgCost')} className="hide-on-mobile" style={{ cursor: 'pointer', userSelect: 'none', textAlign: 'right' }}>
+                  均价 {sortConfig?.key === 'avgCost' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                </th>
+                <th onClick={() => handleSort('currentPrice')} style={{ cursor: 'pointer', userSelect: 'none', textAlign: 'right' }}>
+                  现价 {sortConfig?.key === 'currentPrice' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                </th>
+                <th onClick={() => handleSort('marketValue')} className="hide-on-mobile" style={{ cursor: 'pointer', userSelect: 'none', textAlign: 'right' }}>
+                  市值 {sortConfig?.key === 'marketValue' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                </th>
+                <th onClick={() => handleSort('gainLoss')} style={{ cursor: 'pointer', userSelect: 'none', textAlign: 'right' }}>
+                  盈亏 {sortConfig?.key === 'gainLoss' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                </th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {holdings.map((h) => (
+              {sortedHoldings.map((h) => (
                 <tr key={h.symbol}>
                   <td style={{ fontWeight: 600 }}>{h.symbol}</td>
                   <td style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }}>{h.quantity.toFixed(4)}</td>
