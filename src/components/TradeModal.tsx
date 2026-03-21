@@ -127,11 +127,11 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
 
             {/* Price Box (No harsh background this time) */}
             {stockData && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '-0.125rem' }}>
-                <div style={{ fontSize: '1.625rem', fontWeight: 800, fontFamily: 'var(--font-geist-mono)', lineHeight: 1, letterSpacing: '-0.025em' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', marginTop: '0.125rem' }}>
+                <div style={{ fontSize: '1.5rem', fontWeight: 800, fontFamily: 'var(--font-geist-mono)', lineHeight: 1, letterSpacing: '-0.025em', color: 'var(--text-primary)' }}>
                   {fmt(price)}
                 </div>
-                <div className={stockData.change >= 0 ? 'text-green' : 'text-red'} style={{ display: 'flex', flexDirection: 'column', fontSize: '0.75rem', fontWeight: 600, fontFamily: 'var(--font-geist-mono)', lineHeight: 1.15 }}>
+                <div className={stockData.change >= 0 ? 'text-green' : 'text-red'} style={{ display: 'flex', flexDirection: 'column', fontSize: '0.75rem', fontWeight: 600, fontFamily: 'var(--font-geist-mono)', lineHeight: 1 }}>
                   <span>{stockData.change >= 0 ? '+' : ''}{stockData.change?.toFixed(2)}</span>
                   <span>({stockData.changePercent >= 0 ? '+' : ''}{stockData.changePercent?.toFixed(2)}%)</span>
                 </div>
@@ -140,7 +140,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
           </div>
 
           {/* Right: Actions */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', flexShrink: 0 }}>
             <button 
               onClick={handleRefreshPrice} 
               disabled={refreshingPrice}
@@ -218,7 +218,6 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
               onChange={(e) => setInputValue(e.target.value)}
               min="0"
               step={mode === 'amount' ? '0.01' : '0.000001'}
-              autoFocus
               style={{ width: '100%' }}
             />
             {action === 'SELL' && mode === 'quantity' && userHoldings > 0 && (
