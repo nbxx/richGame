@@ -114,6 +114,9 @@ export default function DashboardPage() {
   const fmt = (n: number) => n.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
   const fmtPct = (n: number) => `${n >= 0 ? '+' : ''}${n.toFixed(2)}%`
 
+  const portfolioPercent = totalAssets > 0 ? (portfolioValue / totalAssets) * 100 : 0
+  const cashPercent = totalAssets > 0 ? (cashBalance / totalAssets) * 100 : 100
+
   if (loading) {
     return (
       <div className="page-container">
@@ -128,19 +131,34 @@ export default function DashboardPage() {
     <div className="page-container fade-in">
       <h2 style={{ fontSize: '1.375rem', fontWeight: 700, marginBottom: '1.5rem' }}>📊 资产概览</h2>
 
-      {/* Asset Summary Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
-        <div className="card">
-          <p className="text-muted" style={{ fontSize: '0.75rem', marginBottom: '0.375rem' }}>总资产</p>
-          <p style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--gold)' }}>{fmt(totalAssets)}</p>
+      {/* Asset Summary Visual Card */}
+      <div className="card" style={{ marginBottom: '2rem', padding: '1.5rem' }}>
+        <p className="text-muted" style={{ fontSize: '0.875rem', marginBottom: '0.375rem' }}>总资产</p>
+        <p style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--gold)', lineHeight: 1, margin: 0, marginBottom: '1.5rem', letterSpacing: '-0.025em' }}>{fmt(totalAssets)}</p>
+
+        {/* Progress Bar Container */}
+        <div style={{ height: '14px', width: '100%', background: 'var(--bg-primary)', border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden', display: 'flex', marginBottom: '1rem' }}>
+          <div style={{ width: `${portfolioPercent}%`, background: 'var(--blue)', transition: 'width 0.5s ease-in-out' }} title={`持仓: ${fmt(portfolioValue)}`}></div>
+          <div style={{ width: `${cashPercent}%`, background: 'var(--green)', transition: 'width 0.5s ease-in-out' }} title={`现金: ${fmt(cashBalance)}`}></div>
         </div>
-        <div className="card">
-          <p className="text-muted" style={{ fontSize: '0.75rem', marginBottom: '0.375rem' }}>现金余额</p>
-          <p style={{ fontSize: '1.5rem', fontWeight: 700 }}>{fmt(cashBalance)}</p>
-        </div>
-        <div className="card">
-          <p className="text-muted" style={{ fontSize: '0.75rem', marginBottom: '0.375rem' }}>持仓市值</p>
-          <p style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--blue)' }}>{fmt(portfolioValue)}</p>
+
+        {/* Legend / Details */}
+        <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+            <div style={{ width: '12px', height: '12px', borderRadius: '3px', background: 'var(--blue)', marginTop: '0.25rem', flexShrink: 0 }}></div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span className="text-muted" style={{ fontSize: '0.75rem', marginBottom: '0.125rem' }}>持仓市值 ({portfolioPercent.toFixed(1)}%)</span>
+              <span style={{ fontWeight: 700, fontSize: '1.125rem', fontFamily: 'var(--font-geist-mono)', lineHeight: 1 }}>{fmt(portfolioValue)}</span>
+            </div>
+          </div>
+          
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+            <div style={{ width: '12px', height: '12px', borderRadius: '3px', background: 'var(--green)', marginTop: '0.25rem', flexShrink: 0 }}></div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span className="text-muted" style={{ fontSize: '0.75rem', marginBottom: '0.125rem' }}>现金余额 ({cashPercent.toFixed(1)}%)</span>
+              <span style={{ fontWeight: 700, fontSize: '1.125rem', fontFamily: 'var(--font-geist-mono)', lineHeight: 1 }}>{fmt(cashBalance)}</span>
+            </div>
+          </div>
         </div>
       </div>
 
