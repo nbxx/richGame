@@ -52,10 +52,10 @@ export function NavBar() {
         </div>
       </div>
       {user && (
-        <div className="nav-container-right" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div className="nav-container-right" style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
           <span 
             className="text-muted nav-email" 
-            style={{ fontSize: '0.8125rem', cursor: 'pointer', userSelect: 'none', display: 'flex', alignItems: 'center' }}
+            style={{ fontSize: '0.8125rem', cursor: 'pointer', userSelect: 'none', display: 'flex', alignItems: 'center', padding: '0.25rem', marginRight: '1.5rem' }}
             onClick={() => setShowEmail(!showEmail)}
             title="点击切换邮箱显示"
           >

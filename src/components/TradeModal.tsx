@@ -113,46 +113,48 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content fade-in" onClick={(e) => e.stopPropagation()}>
         {/* Header & Price Combined */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', gap: '0.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
           
-          {/* Symbol & Company */}
-          <div style={{ flex: '1 1 auto', minWidth: 0 }}>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginBottom: 0, lineHeight: 1.1 }}>{symbol}</h3>
+          {/* Left: Info & Price intimately grouped */}
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+            {/* Symbol Box */}
+            <div style={{ minWidth: 0 }}>
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, lineHeight: 1, margin: 0, letterSpacing: '-0.025em' }}>{symbol}</h3>
+              <p className="text-secondary" style={{ fontSize: '0.75rem', margin: '0.375rem 0 0 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100px', minHeight: '1.125rem' }}>
+                {stockData?.companyName || '\u00A0'}
+              </p>
+            </div>
+
+            {/* Price Box (No harsh background this time) */}
             {stockData && (
-              <p className="text-secondary" style={{ fontSize: '0.75rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', margin: '0.125rem 0 0 0' }}>{stockData.companyName}</p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '-0.125rem' }}>
+                <div style={{ fontSize: '1.625rem', fontWeight: 800, fontFamily: 'var(--font-geist-mono)', lineHeight: 1, letterSpacing: '-0.025em' }}>
+                  {fmt(price)}
+                </div>
+                <div className={stockData.change >= 0 ? 'text-green' : 'text-red'} style={{ display: 'flex', flexDirection: 'column', fontSize: '0.75rem', fontWeight: 600, fontFamily: 'var(--font-geist-mono)', lineHeight: 1.15 }}>
+                  <span>{stockData.change >= 0 ? '+' : ''}{stockData.change?.toFixed(2)}</span>
+                  <span>({stockData.changePercent >= 0 ? '+' : ''}{stockData.changePercent?.toFixed(2)}%)</span>
+                </div>
+              </div>
             )}
           </div>
 
-          {/* Price Block */}
-          {stockData && (
-            <div style={{ display: 'flex', alignItems: 'center', justifyItems: 'center', gap: '0.5rem', flexShrink: 0, background: 'var(--bg-input)', padding: '0.375rem 0.5rem', borderRadius: 'var(--radius-sm)' }}>
-              <div style={{ fontSize: '1.25rem', fontWeight: 700, fontFamily: 'var(--font-geist-mono)' }}>
-                {fmt(price)}
-              </div>
-              <div className={stockData.change >= 0 ? 'text-green' : 'text-red'} style={{ display: 'flex', flexDirection: 'column', fontSize: '0.6875rem', fontFamily: 'var(--font-geist-mono)', lineHeight: 1.2, textAlign: 'right' }}>
-                <span>{stockData.change >= 0 ? '+' : ''}{stockData.change?.toFixed(2)}</span>
-                <span>({stockData.changePercent >= 0 ? '+' : ''}{stockData.changePercent?.toFixed(2)}%)</span>
-              </div>
-            </div>
-          )}
-
-          {/* Actions: Refresh & Close */}
+          {/* Right: Actions */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', flexShrink: 0 }}>
             <button 
               onClick={handleRefreshPrice} 
               disabled={refreshingPrice}
-              className="btn-outline"
-              style={{ borderRadius: '0.25rem', padding: '0.375rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              style={{ background: 'var(--bg-input)', border: 'none', borderRadius: '0.375rem', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.375rem', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
               title="获取最新股价"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={refreshingPrice ? 'spin' : ''}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={refreshingPrice ? 'spin' : ''}>
                 <polyline points="23 4 23 10 17 10"></polyline>
                 <polyline points="1 20 1 14 7 14"></polyline>
                 <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
               </svg>
             </button>
-            <button onClick={onClose} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '0.25rem', display: 'flex' }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <button onClick={onClose} style={{ background: 'var(--bg-input)', border: 'none', borderRadius: '0.375rem', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.375rem', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
           </div>
         </div>

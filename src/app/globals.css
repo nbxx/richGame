@@ -256,7 +256,7 @@ html, body {
   
   .nav-bar { padding: 0 0.5rem; }
   .nav-container-left { gap: 0.5rem !important; }
-  .nav-container-right { gap: 0.25rem !important; }
+  .nav-container-right { gap: 1rem !important; }
   .nav-brand-text { display: none; }
   
   .nav-email { 
