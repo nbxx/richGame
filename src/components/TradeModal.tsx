@@ -23,20 +23,18 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
   const [userHoldings, setUserHoldings] = useState<number>(0)
   const supabase = createClient()
 
-  // Bulletproof iOS Safari progressive layout shift fix for autofocus in fixed modals
+  // Bulletproof iOS Safari/Chrome visual viewport reset
   useEffect(() => {
-    const scrollY = window.scrollY;
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = '100%';
-    document.body.style.overflow = 'hidden';
+    // Capture the true scroll position before autofocus mutates it
+    const originalScrollY = window.scrollY;
 
     return () => {
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.style.overflow = '';
-      window.scrollTo(0, scrollY);
+      // When the modal unconditionally closes (and keyboard drops),
+      // we must compel the mobile browser to recalculate the layout viewport
+      // and drop the accumulated scroll off-set.
+      setTimeout(() => {
+        window.scrollTo(0, originalScrollY);
+      }, 100);
     };
   }, []);
 
