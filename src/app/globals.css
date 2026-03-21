@@ -415,8 +415,8 @@ body {
   }
 
   .modal-overlay {
-    align-items: center;
-    padding-bottom: 3.5rem;
+    align-items: start;
+    padding-bottom: 0;
     /* Sufficient gap to clear mobile OS top bars */
     height: 100dvh;
   }
