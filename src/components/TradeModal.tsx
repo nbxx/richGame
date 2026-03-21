@@ -113,7 +113,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content fade-in" onClick={(e) => e.stopPropagation()}>
         {/* Header & Price Combined */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
 
           {/* Left: Info & Price intimately grouped */}
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
@@ -160,7 +160,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
         </div>
 
         {/* Buy/Sell Toggle */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.75rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '0.5rem' }}>
           <button
             className={`btn ${action === 'BUY' ? 'btn-green' : 'btn-outline'}`}
             onClick={() => { setAction('BUY'); setInputValue(''); }}

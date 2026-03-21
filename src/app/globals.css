@@ -291,9 +291,9 @@ html, body {
   }
   
   .modal-overlay {
-    align-items: center; /* Natural centering in dynamic viewport */
-    padding-top: 0; 
-    height: 100dvh; /* Force container to track the true visual space left by the keyboard */
+    align-items: flex-start; /* Forces modal to stay at top of layout viewport */
+    padding-top: 3.5rem; /* Sufficient gap to clear mobile OS top bars */
+    height: 100dvh;
   }
   
   .modal-content {
