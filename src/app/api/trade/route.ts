@@ -79,7 +79,12 @@ export async function POST(request: NextRequest) {
 
     // 5. Convert amount to quantity if needed
     if (amount && !quantity) {
-      quantity = Number((amount / price).toFixed(6))
+      if (action === 'BUY') {
+        // Floor to 6 decimals to avoid floating-point overshoots strictly exceeding cash balance
+        quantity = Math.floor((amount / price) * 1000000) / 1000000
+      } else {
+        quantity = Number((amount / price).toFixed(6))
+      }
     }
 
     if (!quantity || quantity <= 0) {
