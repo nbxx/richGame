@@ -18,6 +18,14 @@ export const metadata: Metadata = {
   description: "用真实美股价格玩模拟炒股游戏，初始资金 $100,000",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  interactiveWidget: "resizes-content",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
