@@ -250,27 +250,33 @@ html, body {
 }
 
 /* Responsive */
+.nav-container-right {
+  gap: 2.5rem;
+}
+.nav-email {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  font-size: 0.8125rem;
+}
+
 @media (max-width: 768px) {
   .page-container { padding: 1rem; }
   .card { padding: 1rem; }
   
-  .nav-bar { padding: 0 0.5rem; }
-  .nav-container-left { gap: 0.5rem !important; }
-  .nav-container-right { gap: 1rem !important; }
+  .nav-bar { padding: 0 0.25rem; }
+  .nav-container-left { gap: 0.125rem !important; }
+  .nav-container-right { gap: 0.75rem !important; }
   .nav-brand-text { display: none; }
   
   .nav-email { 
-    display: flex !important;
-    justify-content: center;
-    font-size: 0.65rem !important;
-    width: 65px !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    width: 55px !important;
+    font-size: 0.625rem !important;
   }
   
   .nav-links { gap: 0; }
-  .nav-link { padding: 0.5rem 0.375rem; font-size: 0.75rem; white-space: nowrap; }
+  .nav-link { padding: 0.5rem 0.2rem; font-size: 0.6875rem; white-space: nowrap; letter-spacing: -0.025em; }
   
   .data-table th, .data-table td {
     padding: 0.5rem 0.75rem;

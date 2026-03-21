@@ -50,7 +50,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
       .then((r) => r.json())
       .then(setStockData)
       .catch(() => setError('Failed to load stock'))
-    
+
     fetchUserData()
   }, [symbol, fetchUserData])
 
@@ -114,7 +114,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
       <div className="modal-content fade-in" onClick={(e) => e.stopPropagation()}>
         {/* Header & Price Combined */}
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
-          
+
           {/* Left: Info & Price intimately grouped */}
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
             {/* Symbol Box */}
@@ -127,7 +127,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
 
             {/* Price Box (No harsh background this time) */}
             {stockData && (
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', marginTop: '0.125rem' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', marginTop: '0rem' }}>
                 <div style={{ fontSize: '1.5rem', fontWeight: 800, fontFamily: 'var(--font-geist-mono)', lineHeight: 1, letterSpacing: '-0.025em', color: 'var(--text-primary)' }}>
                   {fmt(price)}
                 </div>
@@ -141,8 +141,8 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
 
           {/* Right: Actions */}
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', flexShrink: 0 }}>
-            <button 
-              onClick={handleRefreshPrice} 
+            <button
+              onClick={handleRefreshPrice}
               disabled={refreshingPrice}
               style={{ background: 'var(--bg-input)', border: 'none', borderRadius: '0.375rem', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.375rem', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
               title="获取最新股价"
@@ -218,6 +218,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
               onChange={(e) => setInputValue(e.target.value)}
               min="0"
               step={mode === 'amount' ? '0.01' : '0.000001'}
+              autoFocus
               style={{ width: '100%' }}
             />
             {action === 'SELL' && mode === 'quantity' && userHoldings > 0 && (
