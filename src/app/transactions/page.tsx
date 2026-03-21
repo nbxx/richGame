@@ -42,6 +42,10 @@ export default function TransactionsPage() {
     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) +
       ' ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
   }
+  const fmtDateShort = (s: string) => {
+    const d = new Date(s)
+    return `${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')} ${d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}`
+  }
 
   if (loading) {
     return (
@@ -63,46 +67,64 @@ export default function TransactionsPage() {
             <p className="text-muted">暂无交易记录</p>
           </div>
         ) : (
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>时间</th>
-                <th>股票</th>
-                <th>操作</th>
-                <th style={{ textAlign: 'right' }}>数量</th>
-                <th style={{ textAlign: 'right' }}>成交价</th>
-                <th style={{ textAlign: 'right' }}>成交金额</th>
-                <th style={{ textAlign: 'right' }}>余额</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((tx) => (
-                <tr key={tx.id}>
-                  <td className="text-secondary" style={{ fontSize: '0.8125rem', whiteSpace: 'nowrap' }}>
-                    {fmtDate(tx.created_at)}
-                  </td>
-                  <td style={{ fontWeight: 600 }}>{tx.symbol}</td>
-                  <td>
-                    <span className={`badge ${tx.action === 'BUY' ? 'badge-green' : 'badge-red'}`}>
-                      {tx.action === 'BUY' ? '买入' : '卖出'}
-                    </span>
-                  </td>
-                  <td style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }}>
-                    {Number(tx.quantity).toFixed(4)}
-                  </td>
-                  <td style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }}>
-                    {fmt(tx.price)}
-                  </td>
-                  <td style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)', fontWeight: 600 }}>
-                    {fmt(tx.total_amount)}
-                  </td>
-                  <td style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }} className="text-secondary">
-                    {fmt(tx.cash_after)}
-                  </td>
+          <div className="table-responsive">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th className="hide-on-mobile">时间</th>
+                  <th>股票</th>
+                  <th className="hide-on-mobile">操作</th>
+                  <th style={{ textAlign: 'right' }}>数量</th>
+                  <th className="hide-on-mobile" style={{ textAlign: 'right' }}>成交价</th>
+                  <th style={{ textAlign: 'right' }}>成交金额</th>
+                  <th className="hide-on-mobile" style={{ textAlign: 'right' }}>余额</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {transactions.map((tx) => (
+                  <tr key={tx.id}>
+                    <td className="text-secondary hide-on-mobile" style={{ fontSize: '0.8125rem', whiteSpace: 'nowrap' }}>
+                      {fmtDate(tx.created_at)}
+                    </td>
+                    <td style={{ fontWeight: 600 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span>{tx.symbol}</span>
+                        <span className={`badge ${tx.action === 'BUY' ? 'badge-green' : 'badge-red'} show-on-mobile`}>
+                          {tx.action === 'BUY' ? '买' : '卖'}
+                        </span>
+                      </div>
+                      <div className="text-secondary show-on-mobile" style={{ fontSize: '0.75rem', marginTop: '0.25rem', fontWeight: 400 }}>
+                        {fmtDateShort(tx.created_at)}
+                      </div>
+                    </td>
+                    <td className="hide-on-mobile">
+                      <span className={`badge ${tx.action === 'BUY' ? 'badge-green' : 'badge-red'}`}>
+                        {tx.action === 'BUY' ? '买入' : '卖出'}
+                      </span>
+                    </td>
+                    <td style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }}>
+                      <div>{Number(tx.quantity).toFixed(4)}</div>
+                      <div className="text-secondary show-on-mobile" style={{ fontSize: '0.75rem', marginTop: '0.25rem', fontWeight: 400 }}>
+                        @{fmt(tx.price)}
+                      </div>
+                    </td>
+                    <td className="hide-on-mobile" style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }}>
+                      {fmt(tx.price)}
+                    </td>
+                    <td style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)', fontWeight: 600 }}>
+                      <div>{fmt(tx.total_amount)}</div>
+                      <div className="text-secondary show-on-mobile" style={{ fontSize: '0.75rem', marginTop: '0.25rem', fontWeight: 400 }}>
+                        余 {fmt(tx.cash_after)}
+                      </div>
+                    </td>
+                    <td className="hide-on-mobile text-secondary" style={{ textAlign: 'right', fontFamily: 'var(--font-geist-mono)' }}>
+                      {fmt(tx.cash_after)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>
