@@ -417,7 +417,7 @@ body {
   .modal-overlay {
     align-items: flex-start;
     /* MUST anchor to the top */
-    padding-top: calc(5rem + env(safe-area-inset-top));
+    padding-top: calc(8rem + env(safe-area-inset-top));
     /* Stay safe from notch but hug the top */
     padding-bottom: 0rem;
     height: 100%;
