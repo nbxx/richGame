@@ -291,12 +291,14 @@ html, body {
   }
   
   .modal-overlay {
-    align-items: flex-start;
-    padding-top: 10vh; /* Increased from 2vh to prevent top cutoff */
+    align-items: center; /* Natural centering in dynamic viewport */
+    padding-top: 0; 
+    height: 100dvh; /* Force container to track the true visual space left by the keyboard */
   }
   
   .modal-content {
     padding: 1rem;
-    max-height: 80dvh; /* Standardize with dynamic viewport height */
+    max-height: 90dvh; /* Maximize usable space */
+    width: 100%;
   }
 }
