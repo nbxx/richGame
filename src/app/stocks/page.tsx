@@ -55,7 +55,7 @@ export default function StocksPage() {
       if (!document.hidden) {
         fetchStocks()
       }
-    }, 60000) // Refresh every 60s and only if tab is visible
+    }, 120000) // Refresh every 120s and only if tab is visible
     return () => clearInterval(interval)
   }, [fetchStocks])
 

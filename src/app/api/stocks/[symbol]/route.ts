@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getQuote } from '@/lib/finnhub'
 
-const CACHE_TTL_MS = 15_000
+const CACHE_TTL_MS = 30_000 // 30 seconds
 
 /**
  * GET /api/stocks/[symbol] — Return single stock with real-time price
