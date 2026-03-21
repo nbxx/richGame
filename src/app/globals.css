@@ -415,8 +415,9 @@ body {
   }
 
   .modal-overlay {
-    align-items: anchor-center;
-    padding-bottom: 10em;
+    align-items: center;
+    padding-bottom: 15em;
+    padding-top: 5em;
     height: 100dvh;
   }
 
