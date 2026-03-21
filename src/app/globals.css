@@ -416,6 +416,7 @@ body {
 
   .modal-overlay {
     align-items: self-start;
+    padding-top: 10rem;
     height: 100%;
   }
 
