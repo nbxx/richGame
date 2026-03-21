@@ -415,16 +415,16 @@ body {
   }
 
   .modal-overlay {
-    align-items: flex-end;
-    padding-bottom: 50em;
-    padding-top: 35em;
-    height: 100dvh;
+    align-items: flex-end; /* Anchor to bottom */
+    padding-top: 2rem;
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    height: 100%; /* Classic percentage avoids dvh desync bugs on Chrome */
   }
 
   .modal-content {
     padding: 1rem;
-    max-height: 90dvh;
-    /* Maximize usable space */
+    max-height: 85vh; /* Safe bounds */
     width: 100%;
+    margin-bottom: 0.5rem; /* Small breathable gap from the keyboard or screen bottom */
   }
 }
