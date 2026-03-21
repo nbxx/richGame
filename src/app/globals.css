@@ -415,11 +415,7 @@ body {
   }
 
   .modal-overlay {
-    align-items: flex-start;
-    /* MUST anchor to the top */
-    padding-top: calc(9rem + env(safe-area-inset-top));
-    /* Stay safe from notch but hug the top */
-    padding-bottom: 0rem;
+    align-items: center;
     height: 100%;
   }
 
