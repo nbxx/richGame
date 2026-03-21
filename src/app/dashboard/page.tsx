@@ -197,7 +197,7 @@ export default function DashboardPage() {
                     </span>
                   </td>
                   <td>
-                    <button className="btn btn-outline" style={{ padding: '0.25rem 0.625rem', fontSize: '0.75rem' }}
+                    <button className="btn btn-primary" style={{ padding: '0.25rem 0.75rem', fontSize: '0.75rem', whiteSpace: 'nowrap' }}
                       onClick={() => setTradeSymbol(h.symbol)}>
                       交易
                     </button>
