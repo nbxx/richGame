@@ -415,16 +415,16 @@ body {
   }
 
   .modal-overlay {
-    align-items: flex-end; /* Anchor to bottom */
-    padding-top: 2rem;
-    padding-bottom: max(1rem, env(safe-area-inset-bottom));
-    height: 100%; /* Classic percentage avoids dvh desync bugs on Chrome */
+    align-items: flex-start; /* MUST anchor to the top */
+    padding-top: calc(1rem + env(safe-area-inset-top)); /* Stay safe from notch but hug the top */
+    padding-bottom: 1rem;
+    height: 100%; 
   }
 
   .modal-content {
     padding: 1rem;
-    max-height: 85vh; /* Safe bounds */
+    max-height: 85vh;
     width: 100%;
-    margin-bottom: 0.5rem; /* Small breathable gap from the keyboard or screen bottom */
+    margin-bottom: 1rem;
   }
 }
