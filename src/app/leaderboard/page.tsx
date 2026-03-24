@@ -117,7 +117,7 @@ export default function LeaderboardPage() {
                 <tr>
                   <th style={{ width: '80px' }}>排名</th>
                   <th>玩家</th>
-                  <th style={{ textAlign: 'right' }}>总资产</th>
+                  <th style={{ textAlign: 'right' }}>总资产 / 盈亏</th>
                   <th className="hide-on-mobile" style={{ textAlign: 'right' }}>现金</th>
                   <th className="hide-on-mobile" style={{ textAlign: 'right' }}>持仓</th>
                 </tr>
@@ -141,6 +141,9 @@ export default function LeaderboardPage() {
                     <td style={{ textAlign: 'right' }}>
                       <div style={{ fontFamily: 'var(--font-geist-mono)', fontWeight: 700, color: 'var(--gold)' }}>
                         {fmt(entry.totalAssets)}
+                      </div>
+                      <div className={entry.totalAssets >= 100000 ? 'text-green' : 'text-red'} style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '0.75rem', fontWeight: 600, marginTop: '2px' }}>
+                        {entry.totalAssets >= 100000 ? '+' : ''}{((entry.totalAssets - 100000) / 100000 * 100).toFixed(2)}%
                       </div>
                       <div className="show-on-mobile text-muted" style={{ fontSize: '0.625rem', fontFamily: 'var(--font-geist-mono)', marginTop: '0.25rem' }}>
                         现金: {fmt(entry.cashBalance)}<br />持仓: {fmt(entry.portfolioValue)}
