@@ -121,7 +121,7 @@ export default function DashboardPage() {
     return (
       <div className="page-container">
         <div className="card" style={{ textAlign: 'center', padding: '3rem' }}>
-          <p className="text-muted">加载中...</p>
+          <p className="text-muted">加载中…</p>
         </div>
       </div>
     )
@@ -179,23 +179,35 @@ export default function DashboardPage() {
             <table className="data-table">
             <thead>
               <tr>
-                <th onClick={() => handleSort('symbol')} style={{ cursor: 'pointer', userSelect: 'none' }}>
-                  股票 {sortConfig?.key === 'symbol' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                <th style={{ padding: 0 }}>
+                  <button type="button" onClick={() => handleSort('symbol')} style={{ all: 'unset', display: 'flex', width: '100%', padding: '0.75rem 1rem', cursor: 'pointer', boxSizing: 'border-box' }}>
+                    股票 {sortConfig?.key === 'symbol' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                  </button>
                 </th>
-                <th onClick={() => handleSort('quantity')} style={{ cursor: 'pointer', userSelect: 'none', textAlign: 'right' }}>
-                  持仓量 {sortConfig?.key === 'quantity' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                <th style={{ padding: 0, textAlign: 'right' }}>
+                  <button type="button" onClick={() => handleSort('quantity')} style={{ all: 'unset', display: 'flex', width: '100%', justifyContent: 'flex-end', padding: '0.75rem 1rem', cursor: 'pointer', boxSizing: 'border-box' }}>
+                    持仓量 {sortConfig?.key === 'quantity' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                  </button>
                 </th>
-                <th onClick={() => handleSort('avgCost')} className="hide-on-mobile" style={{ cursor: 'pointer', userSelect: 'none', textAlign: 'right' }}>
-                  均价 {sortConfig?.key === 'avgCost' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                <th className="hide-on-mobile" style={{ padding: 0, textAlign: 'right' }}>
+                  <button type="button" onClick={() => handleSort('avgCost')} style={{ all: 'unset', display: 'flex', width: '100%', justifyContent: 'flex-end', padding: '0.75rem 1rem', cursor: 'pointer', boxSizing: 'border-box' }}>
+                    均价 {sortConfig?.key === 'avgCost' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                  </button>
                 </th>
-                <th onClick={() => handleSort('currentPrice')} style={{ cursor: 'pointer', userSelect: 'none', textAlign: 'right' }}>
-                  现价 {sortConfig?.key === 'currentPrice' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                <th style={{ padding: 0, textAlign: 'right' }}>
+                  <button type="button" onClick={() => handleSort('currentPrice')} style={{ all: 'unset', display: 'flex', width: '100%', justifyContent: 'flex-end', padding: '0.75rem 1rem', cursor: 'pointer', boxSizing: 'border-box' }}>
+                    现价 {sortConfig?.key === 'currentPrice' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                  </button>
                 </th>
-                <th onClick={() => handleSort('marketValue')} className="hide-on-mobile" style={{ cursor: 'pointer', userSelect: 'none', textAlign: 'right' }}>
-                  市值 {sortConfig?.key === 'marketValue' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                <th className="hide-on-mobile" style={{ padding: 0, textAlign: 'right' }}>
+                  <button type="button" onClick={() => handleSort('marketValue')} style={{ all: 'unset', display: 'flex', width: '100%', justifyContent: 'flex-end', padding: '0.75rem 1rem', cursor: 'pointer', boxSizing: 'border-box' }}>
+                    市值 {sortConfig?.key === 'marketValue' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                  </button>
                 </th>
-                <th onClick={() => handleSort('gainLoss')} style={{ cursor: 'pointer', userSelect: 'none', textAlign: 'right' }}>
-                  盈亏 {sortConfig?.key === 'gainLoss' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                <th style={{ padding: 0, textAlign: 'right' }}>
+                  <button type="button" onClick={() => handleSort('gainLoss')} style={{ all: 'unset', display: 'flex', width: '100%', justifyContent: 'flex-end', padding: '0.75rem 1rem', cursor: 'pointer', boxSizing: 'border-box' }}>
+                    盈亏 {sortConfig?.key === 'gainLoss' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                  </button>
                 </th>
                 <th></th>
               </tr>

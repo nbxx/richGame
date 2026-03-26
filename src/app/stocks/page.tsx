@@ -80,7 +80,7 @@ export default function StocksPage() {
     return (
       <div className="page-container">
         <div className="card" style={{ textAlign: 'center', padding: '3rem' }}>
-          <p className="text-muted">加载股票数据...</p>
+          <p className="text-muted">加载股票数据…</p>
         </div>
       </div>
     )
@@ -122,23 +122,35 @@ export default function StocksPage() {
           <table className="data-table">
           <thead>
             <tr>
-              <th onClick={() => handleSort('symbol')} style={{ cursor: 'pointer', userSelect: 'none' }}>
-                代码 {sortConfig?.key === 'symbol' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+              <th style={{ padding: 0 }}>
+                <button type="button" onClick={() => handleSort('symbol')} style={{ all: 'unset', display: 'flex', width: '100%', padding: '0.75rem 1rem', cursor: 'pointer', boxSizing: 'border-box' }}>
+                  代码 {sortConfig?.key === 'symbol' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                </button>
               </th>
-              <th onClick={() => handleSort('companyName')} className="hide-on-mobile" style={{ cursor: 'pointer', userSelect: 'none' }}>
-                公司 {sortConfig?.key === 'companyName' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+              <th className="hide-on-mobile" style={{ padding: 0 }}>
+                <button type="button" onClick={() => handleSort('companyName')} style={{ all: 'unset', display: 'flex', width: '100%', padding: '0.75rem 1rem', cursor: 'pointer', boxSizing: 'border-box' }}>
+                  公司 {sortConfig?.key === 'companyName' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                </button>
               </th>
-              <th onClick={() => handleSort('sector')} className="hide-on-mobile" style={{ cursor: 'pointer', userSelect: 'none' }}>
-                行业 {sortConfig?.key === 'sector' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+              <th className="hide-on-mobile" style={{ padding: 0 }}>
+                <button type="button" onClick={() => handleSort('sector')} style={{ all: 'unset', display: 'flex', width: '100%', padding: '0.75rem 1rem', cursor: 'pointer', boxSizing: 'border-box' }}>
+                  行业 {sortConfig?.key === 'sector' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                </button>
               </th>
-              <th onClick={() => handleSort('price')} style={{ cursor: 'pointer', userSelect: 'none', textAlign: 'right' }}>
-                现价 {sortConfig?.key === 'price' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+              <th style={{ padding: 0, textAlign: 'right' }}>
+                <button type="button" onClick={() => handleSort('price')} style={{ all: 'unset', display: 'flex', width: '100%', justifyContent: 'flex-end', padding: '0.75rem 1rem', cursor: 'pointer', boxSizing: 'border-box' }}>
+                  现价 {sortConfig?.key === 'price' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                </button>
               </th>
-              <th onClick={() => handleSort('change')} className="hide-on-mobile" style={{ cursor: 'pointer', userSelect: 'none', textAlign: 'right' }}>
-                涨跌 {sortConfig?.key === 'change' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+              <th className="hide-on-mobile" style={{ padding: 0, textAlign: 'right' }}>
+                <button type="button" onClick={() => handleSort('change')} style={{ all: 'unset', display: 'flex', width: '100%', justifyContent: 'flex-end', padding: '0.75rem 1rem', cursor: 'pointer', boxSizing: 'border-box' }}>
+                  涨跌 {sortConfig?.key === 'change' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                </button>
               </th>
-              <th onClick={() => handleSort('changePercent')} style={{ cursor: 'pointer', userSelect: 'none', textAlign: 'right' }}>
-                涨跌幅 {sortConfig?.key === 'changePercent' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+              <th style={{ padding: 0, textAlign: 'right' }}>
+                <button type="button" onClick={() => handleSort('changePercent')} style={{ all: 'unset', display: 'flex', width: '100%', justifyContent: 'flex-end', padding: '0.75rem 1rem', cursor: 'pointer', boxSizing: 'border-box' }}>
+                  涨跌幅 {sortConfig?.key === 'changePercent' ? (sortConfig.dir === 'asc' ? '↑' : '↓') : ''}
+                </button>
               </th>
               <th></th>
             </tr>

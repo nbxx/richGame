@@ -74,7 +74,7 @@ export default function LeaderboardPage() {
     return (
       <div className="page-container">
         <div className="card" style={{ textAlign: 'center', padding: '3rem' }}>
-          <p className="text-muted">加载排行榜...</p>
+          <p className="text-muted">加载排行榜…</p>
         </div>
       </div>
     )
@@ -97,7 +97,7 @@ export default function LeaderboardPage() {
             disabled={refreshing}
             style={{ padding: '0.375rem 0.875rem', fontSize: '0.8125rem' }}
           >
-            {refreshing ? '思考中...' : '🔄 刷新排名'}
+            {refreshing ? '思考中…' : '🔄 刷新排名'}
           </button>
         </div>
       </div>

@@ -53,11 +53,13 @@ export function NavBar() {
       </div>
       {user && (
         <div className="nav-container-right" style={{ display: 'flex', alignItems: 'center' }}>
-          <span 
+          <button 
+            type="button"
             className="text-muted nav-email" 
-            style={{ cursor: 'pointer', userSelect: 'none', padding: '0.25rem' }}
+            style={{ cursor: 'pointer', userSelect: 'none', padding: '0.25rem', border: 'none', background: 'transparent', textAlign: 'left', fontFamily: 'inherit' }}
             onClick={() => setShowEmail(!showEmail)}
             title="点击切换邮箱显示"
+            aria-label={showEmail ? "隐藏邮箱" : "显示邮箱"}
           >
             {showEmail ? user.email : (
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -67,7 +69,7 @@ export function NavBar() {
                 <line x1="2" y1="2" x2="22" y2="22"></line>
               </svg>
             )}
-          </span>
+          </button>
           <button onClick={handleLogout} className="btn btn-outline" style={{ padding: '0.375rem 0.75rem', fontSize: '0.8125rem', whiteSpace: 'nowrap' }}>
             登出
           </button>

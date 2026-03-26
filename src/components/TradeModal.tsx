@@ -159,8 +159,9 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
             <button
               onClick={handleRefreshPrice}
               disabled={refreshingPrice}
-              style={{ background: 'var(--bg-input)', border: 'none', borderRadius: '0.375rem', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.375rem', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
+              style={{ background: 'var(--bg-input)', border: 'none', borderRadius: '0.375rem', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.375rem', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'color 0.2s, background-color 0.2s' }}
               title="获取最新股价"
+              aria-label="刷新价格"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={refreshingPrice ? 'spin' : ''}>
                 <polyline points="23 4 23 10 17 10"></polyline>
@@ -168,7 +169,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
                 <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
               </svg>
             </button>
-            <button onClick={onClose} style={{ background: 'var(--bg-input)', border: 'none', borderRadius: '0.375rem', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.375rem', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}>
+            <button onClick={onClose} aria-label="关闭" style={{ background: 'var(--bg-input)', border: 'none', borderRadius: '0.375rem', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.375rem', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'color 0.2s, background-color 0.2s' }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
           </div>
@@ -278,7 +279,7 @@ export function TradeModal({ symbol, onClose, onTradeComplete }: TradeModalProps
           onClick={handleTrade}
           disabled={loading || numValue <= 0}
         >
-          {loading ? '处理中...' : `确认${action === 'BUY' ? '买入' : '卖出'}`}
+          {loading ? '处理中…' : `确认${action === 'BUY' ? '买入' : '卖出'}`}
         </button>
 
         {error && <p style={{ color: 'var(--red)', marginTop: '0.75rem', fontSize: '0.8125rem', textAlign: 'center' }}>{error}</p>}
